@@ -1,17 +1,16 @@
 {
-    "name": "with music",
+    "name": "Tiles Advanced",
     "description": "",
     "dependencies": {
-        "device": "*"
+        "device": "*",
+        "arcade-tilemap-a-star": "github:jwunderl/arcade-tilemap-a-star#v0.4.0"
     },
     "files": [
         "main.blocks",
         "main.ts",
         "README.md",
         "assets.json",
-        "main.py",
-        "tilemap.g.jres",
-        "tilemap.g.ts"
+        "tilesadvanced.ts"
     ],
     "testFiles": [
         "test.ts"
@@ -24,5 +23,5 @@
     "supportedTargets": [
         "arcade"
     ],
-    "preferredEditor": "pyprj"
+    "preferredEditor": "tsprj"
 }
