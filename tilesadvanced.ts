@@ -105,13 +105,13 @@ namespace tilesAdvanced {
     //% weight=20
     export function followUsingPathfinding(sprite: Sprite, target: Sprite, speed = 100) {
         let myStart = sprite.tilemapLocation();
-        let path = scene.aStar(myStart, target.tilemapLocation())
-        scene.followPath(sprite, path, speed)
+        let path = scene.aStar(myStart, target.tilemapLocation());
+        scene.followPath(sprite, path, speed);
         game.onUpdate(function tick() {
             if (!tileIsTile(sprite.tilemapLocation(), myStart)) {
                 myStart = sprite.tilemapLocation();
-                path = scene.aStar(myStart, target.tilemapLocation())
-                scene.followPath(sprite, path, speed)
+                path = scene.aStar(myStart, target.tilemapLocation());
+                scene.followPath(sprite, path, speed);
             }
         })
     }
