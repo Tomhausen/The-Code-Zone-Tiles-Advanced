@@ -92,7 +92,6 @@ namespace tilesAdvanced {
             if (frame == animation.length - 1) {
                 frame = 0
             }
-            console.log(frame)
         })
     }
 
