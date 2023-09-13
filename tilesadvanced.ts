@@ -128,8 +128,8 @@ namespace tilesAdvanced {
         let xDif = target.x - lookingSprite.x
         let yDif = target.y - lookingSprite.y
         let distance = Math.sqrt(xDif ** 2 + yDif ** 2) // inventing triangles        
-        let xIncrement = xDif / distance
-        let yIncrement = yDif / distance
+        let xIncrement = xDif / 25
+        let yIncrement = yDif / 25
         for (let i = 0; i < 25; i++) {
             let x = lookingSprite.x + i * xIncrement
             let y = lookingSprite.y + i * yIncrement
