@@ -107,6 +107,7 @@ namespace tilesAdvanced {
         if (speed == 0){
             let path = scene.aStar(myStart, myStart);
             scene.followPath(sprite, path, 0)
+            sprite.say("")
             return
         }
         let path = scene.aStar(myStart, target.tilemapLocation());
@@ -117,6 +118,7 @@ namespace tilesAdvanced {
                 path = scene.aStar(myStart, target.tilemapLocation());
                 scene.followPath(sprite, path, speed);
             }
+            sprite.say("following")
         })
     }
 }
