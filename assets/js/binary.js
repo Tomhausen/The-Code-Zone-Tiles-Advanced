@@ -1,4 +1,4 @@
-// meta={"simUrl":"/simulator.html","cdnUrl":"/","version":"0.0.5","target":"arcade","targetVersion":"1.13.9","repo":"tomhausen/the-code-zone-tiles-advanced"}
+// meta={"simUrl":"/simulator.html","cdnUrl":"/","version":"0.0.6","target":"arcade","targetVersion":"1.13.9","repo":"tomhausen/the-code-zone-tiles-advanced"}
 // total=1247373 new=5.85% cached=88.47% other=5.67%
 (function (ectx) {
 'use strict';
@@ -429,7 +429,7 @@ const pxsim_pxtrt = pxsim.pxtrt;
 const pxsim_numops = pxsim.numops;
 
 
-function _main___P63503(s) {
+function _main___P64913(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -831,13 +831,13 @@ switch (step) {
     return leave(s, r0)
   default: oops()
 } } }
-_main___P63503.info = {"start":0,"length":0,"line":0,"column":0,"endLine":0,"endColumn":0,"fileName":"pxt_modules/arcade-tilemap-a-star/main.ts","functionName":"<main>","argumentNames":[]}
-_main___P63503.continuations = [  ]
+_main___P64913.info = {"start":0,"length":0,"line":0,"column":0,"endLine":0,"endColumn":0,"fileName":"pxt_modules/arcade-tilemap-a-star/main.ts","functionName":"<main>","argumentNames":[]}
+_main___P64913.continuations = [  ]
 
-function _main___P63503_mk(s) {
+function _main___P64913_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: _main___P63503, depth: s.depth + 1,
+        parent: s, fn: _main___P64913, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
   tmp_1: undefined,
@@ -42295,5 +42295,5 @@ const sprites_BaseSpriteSayRenderer__C44685_VT = mkVTable({
 
 const breakpoints = setupDebugger(1, [])
 
-return _main___P63503
+return _main___P64913
 })
