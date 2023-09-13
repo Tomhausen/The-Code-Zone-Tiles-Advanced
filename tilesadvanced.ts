@@ -106,6 +106,7 @@ namespace tilesAdvanced {
         let myStart = sprite.tilemapLocation();
         if (speed == 0){
             let path = scene.aStar(myStart, myStart);
+            scene.followPath(sprite, path)
             return
         }
         let path = scene.aStar(myStart, target.tilemapLocation());
