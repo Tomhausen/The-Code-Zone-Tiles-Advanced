@@ -104,12 +104,6 @@ namespace tilesAdvanced {
     //% weight=20
     export function followUsingPathfinding(sprite: Sprite, target: Sprite, speed = 100) {
         let myStart = sprite.tilemapLocation();
-        if (speed == 0){
-            let path = scene.aStar(myStart, myStart);
-            scene.followPath(sprite, path)
-            sprite.say("")
-            return
-        }
         let path = scene.aStar(myStart, target.tilemapLocation());
         scene.followPath(sprite, path, speed);
         game.onUpdate(function tick() {
@@ -120,6 +114,32 @@ namespace tilesAdvanced {
             }
             sprite.say("following")
         })
+    }
+
+
+    /**
+     * Returns true if one sprite can see another without a wall in the way
+     */
+    //% blockId=checkLineOfSight
+    //% block="check line of sight %sprite=lookingSprite(myEnemy) %target=variables_get(mySprite)"
+    //% group="Pathfinding"
+    //% weight=20
+    export function checkLineOfSight(lookingSprite: Sprite, target: Sprite) {
+        let xDif = target.x - lookingSprite.x
+        let yDif = target.y - lookingSprite.y
+        let distance = Math.sqrt(xDif ** 2 + yDif ** 2) // inventing triangles        
+        let xIncrement = xDif / distance
+        let yIncrement = yDif / distance
+        for (let i = 0; i < 25; i++) {
+            let x = lookingSprite.x + i * xIncrement
+            let y = lookingSprite.y + i * yIncrement
+            let col = Math.floor(x / 16)
+            let row = Math.floor(y / 16)
+            if (tiles.tileAtLocationIsWall(tiles.getTileLocation(col, row))) {
+                return false
+            }
+        }
+        return true
     }
 }
 
