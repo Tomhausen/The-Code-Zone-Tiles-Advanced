@@ -75,6 +75,19 @@ namespace tilesAdvanced {
     }
 
     /**
+     * All tiles of the same design have their image swapped for a given design
+     */
+    //% blockId=swapAllTiles
+    //% block="swap tiles $from to $to"
+    //% group="Tilemap Population"
+    //% weight=20
+    export function swapAllTiles(from: Image, to: Image) {
+        for (let tileOfType of tiles.getTilesByType(from)) {
+            tiles.setTileAt(tileOfType, to)
+        }
+    }
+
+    /**
      * Animates all tiles of the given type with the animation passed in on the interval given
      */
     //% blockId=animateTileOfTypeWith
