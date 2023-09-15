@@ -11,6 +11,7 @@ namespace tilesAdvanced {
      */
     //% blockId=getAdjacentTiles
     //% block="get tiles near to $tile within $distance"
+    //% tile.shadow=mapgettile
     //% group="Local Tiles"
     //% weight=100
     export function getAdjacentTiles(tile: tiles.Location, distance: number): tiles.Location[] {
@@ -39,8 +40,10 @@ namespace tilesAdvanced {
      */
     //% blockId=tileIsTile
     //% block="$tile is $otherTile"
+    //% tile.shadow=mapgettile
+    //% otherTile.shadow=mapgettile
     //% group="Tile Comparisons"
-    //% weight=-100
+    //% weight=100
     export function tileIsTile(tile: tiles.Location, otherTile: tiles.Location): boolean {
         if (tile.col == otherTile.col && tile.row == otherTile.row) {
             return true
@@ -52,7 +55,8 @@ namespace tilesAdvanced {
      * Returns true if the given tile is in the list of tiles provided
      */
     //% blockId=tileIsInList
-    //% block="$tile is in $tileList"
+    //% block="$tile is in $tileList=variables_get(list)"
+    //% tile.shadow=mapgettile
     //% group="Tile Comparisons"
     //% weight=3
     export function tileIsInList(tile: tiles.Location, tileList: tiles.Location[]): boolean {
@@ -69,6 +73,8 @@ namespace tilesAdvanced {
      */
     //% blockId=setWallOnTilesOfType
     //% block="set walls $makeWall on tiles of type $tile"
+    //% tile.shadow=tileset_tile_picker
+    //% tile.decompileIndirectFixedInstances=true
     //% group="Tilemap Population"
     //% weight=4
     export function setWallOnTilesOfType(tile: Image, makeWall: boolean) {
@@ -82,6 +88,10 @@ namespace tilesAdvanced {
      */
     //% blockId=swapAllTiles
     //% block="swap tiles $from to $to"
+    //% from.shadow=tileset_tile_picker
+    //% from.decompileIndirectFixedInstances=true
+    //% to.shadow=tileset_tile_picker
+    //% to.decompileIndirectFixedInstances=true
     //% group="Tilemap Population"
     //% weight=5
     export function swapAllTiles(from: Image, to: Image) {
@@ -95,6 +105,8 @@ namespace tilesAdvanced {
      */
     //% blockId=animateTileOfTypeWith
     //% block="animate $tile with $animation every $frameLength"
+    //% tile.shadow=tileset_tile_picker
+    //% tile.decompileIndirectFixedInstances=true
     //% group="Tile Animation"
     //% weight=6
     export function animateTileOfTypeWith(tile: Image, animation: Image[], frameLenght: number) {
