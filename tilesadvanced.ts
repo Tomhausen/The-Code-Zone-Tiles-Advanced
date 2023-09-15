@@ -1,4 +1,4 @@
-//% weight=99 color=#13a89e icon="\uf041" block="Tiles Advanced"
+//% weight=0 color=#13a89e icon="\uf041" block="Tiles Advanced"
 //% advanced=false
 //% groups="['Local Tiles', 'Tilemap Population', 'Tile Comparisons', 'Tile Animation', 'Pathfinding']"
 
