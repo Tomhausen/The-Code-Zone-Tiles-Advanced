@@ -1,3 +1,6 @@
+/**
+* Adds additional tilemap functionality
+*/
 //% weight=0 color=#13a89e icon="\uf041" block="Tiles Advanced"
 //% advanced=false
 //% groups="['Local Tiles', 'Tilemap Population', 'Tile Comparisons', 'Tile Animation', 'Pathfinding']"
@@ -9,7 +12,7 @@ namespace tilesAdvanced {
     //% blockId=getAdjacentTiles
     //% block="get tiles near to $tile within $distance"
     //% group="Local Tiles"
-    //% weight=1
+    //% weight=100
     export function getAdjacentTiles(tile: tiles.Location, distance: number): tiles.Location[] {
         let i: number;
         let col = tile.col;
@@ -37,7 +40,7 @@ namespace tilesAdvanced {
     //% blockId=tileIsTile
     //% block="$tile is $otherTile"
     //% group="Tile Comparisons"
-    //% weight=2
+    //% weight=-100
     export function tileIsTile(tile: tiles.Location, otherTile: tiles.Location): boolean {
         if (tile.col == otherTile.col && tile.row == otherTile.row) {
             return true
@@ -109,10 +112,36 @@ namespace tilesAdvanced {
     }
 
     /**
+     * Returns true if one sprite can see another without a wall in the way
+     */
+    //% blockId=checkLineOfSight
+    //% block="can %sprite=variables_get(myEnemy) see %target=variables_get(mySprite)"
+    //% group="Pathfinding"
+    //% weight=8
+    export function checkLineOfSight(lookingSprite: Sprite, target: Sprite): boolean {
+        let xDif = target.x - lookingSprite.x
+        let yDif = target.y - lookingSprite.y
+        let distance = Math.sqrt(xDif ** 2 + yDif ** 2) // inventing triangles 
+        console.log(distance)
+        let xIncrement = xDif / 25
+        let yIncrement = yDif / 25
+        for (let i = 0; i < 25; i++) {
+            let x = lookingSprite.x + i * xIncrement
+            let y = lookingSprite.y + i * yIncrement
+            let col = Math.floor(x / 16)
+            let row = Math.floor(y / 16)
+            if (tiles.tileAtLocationIsWall(tiles.getTileLocation(col, row))) {
+                return false
+            }
+        }
+        return true
+    }
+
+    /**
      * Makes this sprite follow the target sprite using pathfinding
      */
     //% blockId=followUsingPathfinding
-    //% block="set %sprite(myEnemy) follow %target=variables_get(mySprite) || with speed %speed"
+    //% block="set %sprite=variables_get(myEnemy) follow %target=variables_get(mySprite) || with speed %speed"
     //% group="Pathfinding"
     //% weight=7
     export function followUsingPathfinding(sprite: Sprite, target: Sprite, speed = 100) {
@@ -129,32 +158,6 @@ namespace tilesAdvanced {
         })
     }
 
-
-    /**
-     * Returns true if one sprite can see another without a wall in the way
-     */
-    //% blockId=checkLineOfSight
-    //% block="check line of sight %sprite=lookingSprite(myEnemy) %target=variables_get(mySprite)"
-    //% group="Pathfinding"
-    //% weight=8
-    export function checkLineOfSight(lookingSprite: Sprite, target: Sprite) {
-        let xDif = target.x - lookingSprite.x
-        let yDif = target.y - lookingSprite.y
-        let distance = Math.sqrt(xDif ** 2 + yDif ** 2) // inventing triangles 
-        console.log(distance)       
-        let xIncrement = xDif / 25
-        let yIncrement = yDif / 25
-        for (let i = 0; i < 25; i++) {
-            let x = lookingSprite.x + i * xIncrement
-            let y = lookingSprite.y + i * yIncrement
-            let col = Math.floor(x / 16)
-            let row = Math.floor(y / 16)
-            if (tiles.tileAtLocationIsWall(tiles.getTileLocation(col, row))) {
-                return false
-            }
-        }
-        return true
-    }
 }
 
 
