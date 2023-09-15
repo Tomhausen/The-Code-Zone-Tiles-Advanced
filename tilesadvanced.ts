@@ -9,7 +9,7 @@ namespace tilesAdvanced {
     //% blockId=getAdjacentTiles
     //% block="get tiles near to $tile within $distance"
     //% group="Local Tiles"
-    //% weight=20
+    //% weight=1
     export function getAdjacentTiles(tile: tiles.Location, distance: number): tiles.Location[] {
         let i: number;
         let col = tile.col;
@@ -37,7 +37,7 @@ namespace tilesAdvanced {
     //% blockId=tileIsTile
     //% block="$tile is $otherTile"
     //% group="Tile Comparisons"
-    //% weight=20
+    //% weight=2
     export function tileIsTile(tile: tiles.Location, otherTile: tiles.Location): boolean {
         if (tile.col == otherTile.col && tile.row == otherTile.row) {
             return true
@@ -51,7 +51,7 @@ namespace tilesAdvanced {
     //% blockId=tileIsInList
     //% block="$tile is in $tileList"
     //% group="Tile Comparisons"
-    //% weight=20
+    //% weight=3
     export function tileIsInList(tile: tiles.Location, tileList: tiles.Location[]): boolean {
         for (let tileInList of tileList) {
             if (tileIsTile(tile, tileInList)) {
@@ -67,7 +67,7 @@ namespace tilesAdvanced {
     //% blockId=setWallOnTilesOfType
     //% block="set walls $makeWall on tiles of type $tile"
     //% group="Tilemap Population"
-    //% weight=20
+    //% weight=4
     export function setWallOnTilesOfType(tile: Image, makeWall: boolean) {
         for (let tileOfType of tiles.getTilesByType(tile)) {
             tiles.setWallAt(tileOfType, makeWall)
@@ -80,7 +80,7 @@ namespace tilesAdvanced {
     //% blockId=swapAllTiles
     //% block="swap tiles $from to $to"
     //% group="Tilemap Population"
-    //% weight=20
+    //% weight=5
     export function swapAllTiles(from: Image, to: Image) {
         for (let tileOfType of tiles.getTilesByType(from)) {
             tiles.setTileAt(tileOfType, to)
@@ -93,7 +93,7 @@ namespace tilesAdvanced {
     //% blockId=animateTileOfTypeWith
     //% block="animate $tile with $animation every $frameLength"
     //% group="Tile Animation"
-    //% weight=20
+    //% weight=6
     export function animateTileOfTypeWith(tile: Image, animation: Image[], frameLenght: number) {
         let frame = 0
         let tilesToAnimate = tiles.getTilesByType(tile)
@@ -114,7 +114,7 @@ namespace tilesAdvanced {
     //% blockId=followUsingPathfinding
     //% block="set %sprite(myEnemy) follow %target=variables_get(mySprite) || with speed %speed"
     //% group="Pathfinding"
-    //% weight=20
+    //% weight=7
     export function followUsingPathfinding(sprite: Sprite, target: Sprite, speed = 100) {
         let myStart = sprite.tilemapLocation();
         let path = scene.aStar(myStart, target.tilemapLocation());
@@ -136,7 +136,7 @@ namespace tilesAdvanced {
     //% blockId=checkLineOfSight
     //% block="check line of sight %sprite=lookingSprite(myEnemy) %target=variables_get(mySprite)"
     //% group="Pathfinding"
-    //% weight=20
+    //% weight=8
     export function checkLineOfSight(lookingSprite: Sprite, target: Sprite) {
         let xDif = target.x - lookingSprite.x
         let yDif = target.y - lookingSprite.y
