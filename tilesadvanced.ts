@@ -3,7 +3,7 @@
 */
 //% weight=0 color=#13a89e icon="\uf041" block="Tiles Advanced"
 //% advanced=false
-//% groups="['Local Tiles', 'Tilemap Population', 'Tile Comparisons', 'Tile Animation', 'Pathfinding']"
+//% groups="['Getting Tiles', 'Tilemap Population', 'Tile Comparisons', 'Tile Animation', 'Pathfinding']"
 
 namespace tilesAdvanced {
     /**
@@ -12,7 +12,7 @@ namespace tilesAdvanced {
     //% blockId=getAdjacentTiles
     //% block="get tiles near to $tile within $distance"
     //% tile.shadow=mapgettile
-    //% group="Local Tiles"
+    //% group="Getting Tiles"
     //% weight=100
     export function getAdjacentTiles(tile: tiles.Location, distance: number): tiles.Location[] {
         let i: number;
@@ -98,6 +98,29 @@ namespace tilesAdvanced {
         for (let tileOfType of tiles.getTilesByType(from)) {
             tiles.setTileAt(tileOfType, to)
         }
+    }
+
+    /**
+     * Returns a list of all the tiles that are a wall
+     */
+    //% blockId = getAllWallTiles
+    //% block="array of all wall tiles"
+    //% group="Getting Tiles"
+    //% weight=6
+
+    export function getAllWallTiles(){
+        let width = game.currentScene().tileMap.data.width - 1;
+        let height = game.currentScene().tileMap.data.height - 1;
+        let walls = [];
+        for (let w = 0; w < width; w++){
+            for (let h = 0; h < height; h++){
+                let tile = tiles.getTileLocation(w, h);
+                if (tiles.tileAtLocationIsWall(tile)){
+                    walls.push(tile);
+                }
+            }
+        }
+        return walls;
     }
 
     /**
