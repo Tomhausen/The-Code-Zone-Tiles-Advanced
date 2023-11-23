@@ -107,8 +107,7 @@ namespace tilesAdvanced {
     //% block="array of all wall tiles"
     //% group="Getting Tiles"
     //% weight=6
-
-    export function getAllWallTiles(){
+    export function getAllWallTiles(): tiles.Location[]{
         let width = game.currentScene().tileMap.data.width - 1;
         let height = game.currentScene().tileMap.data.height - 1;
         let walls = [];
@@ -121,6 +120,28 @@ namespace tilesAdvanced {
             }
         }
         return walls;
+    }
+
+    /**
+     * Returns the width of the tilemap in use
+     */
+    //% blockId = getTilemapWidth
+    //% block="get tilemap width"
+    //% group="Getting Tiles"
+    //% weight=7
+    export function getTilemapWidth(): number{
+        return game.currentScene().tileMap.data.width;
+    }
+
+    /**
+     * Returns the height of the tilemap in use
+     */
+    //% blockId = getTilemapHeight
+    //% block="get tilemap height"
+    //% group="Getting Tiles"
+    //% weight=8
+    export function getTilemapHeight(): number {
+        return game.currentScene().tileMap.data.height;
     }
 
     /**
