@@ -103,7 +103,7 @@ namespace tilesAdvanced {
     /**
      * Returns a list of all the tiles that are a wall
      */
-    //% blockId = getAllWallTiles
+    //% blockId=getAllWallTiles
     //% block="array of all wall tiles"
     //% group="Getting Tiles"
     //% weight=6
@@ -125,7 +125,7 @@ namespace tilesAdvanced {
     /**
      * Returns the width of the tilemap in use
      */
-    //% blockId = getTilemapWidth
+    //% blockId=getTilemapWidth
     //% block="get tilemap width"
     //% group="Getting Tiles"
     //% weight=7
@@ -136,7 +136,7 @@ namespace tilesAdvanced {
     /**
      * Returns the height of the tilemap in use
      */
-    //% blockId = getTilemapHeight
+    //% blockId=getTilemapHeight
     //% block="get tilemap height"
     //% group="Getting Tiles"
     //% weight=8
