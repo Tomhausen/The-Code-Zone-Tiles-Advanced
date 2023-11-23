@@ -129,7 +129,7 @@ namespace tilesAdvanced {
     //% block="get tilemap width"
     //% group="Getting Tiles"
     //% weight=7
-    export function getTilemapWidth(): number{
+    export function getTilemapWidth(): number {
         return game.currentScene().tileMap.data.width;
     }
 
