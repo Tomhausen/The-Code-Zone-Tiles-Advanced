@@ -96,9 +96,33 @@ namespace tilesAdvanced {
     //% weight=5
     export function swapAllTiles(from: Image, to: Image) {
         for (let tileOfType of tiles.getTilesByType(from)) {
-            tiles.setTileAt(tileOfType, to)
+            tiles.setTileAt(tileOfType, to);
         }
     }
+
+    /**
+     * Center the given sprite on a random location that is the given type (image) and is off screen
+     * @param sprite
+     * @param tile
+     */
+    //% blockId=placeOnRandomTileOffScreen
+    //% block="place $sprite=variables_get(mySprite) on top of random $tile off screen"
+    //% tile.shadow=tileset_tile_picker
+    //% tile.decompileIndirectFixedInstances=true
+    //% help=tiles/place-on-random-tile
+    //% group="Tilemap Population"
+    //% weight=6
+    export function placeOnRandomTileOffScreen(sprite: Sprite, tile: Image) {
+        tiles.placeOnRandomTile(sprite, tile);
+        let spriteSize = Math.sqrt((sprite.width / 2) ^ 2 + (sprite.height / 2) ^ 2);
+        let x_dist = sprite.x - scene.cameraProperty(CameraProperty.X);
+        let y_dist = sprite.y - scene.cameraProperty(CameraProperty.Y);
+        let distance = Math.sqrt(x_dist ^ 2 + y_dist ^ 2);
+        if (distance < spriteSize + 120) {
+            placeOnRandomTileOffScreen(sprite, tile)
+        }
+    }
+    
 
     /**
      * Returns a list of all the tiles that are a wall
@@ -108,8 +132,8 @@ namespace tilesAdvanced {
     //% group="Getting Tiles"
     //% weight=6
     export function getAllWallTiles(): tiles.Location[]{
-        let width = game.currentScene().tileMap.data.width - 1;
-        let height = game.currentScene().tileMap.data.height - 1;
+        let width = getTilemapWidth() - 1;
+        let height = getTilemapHeight() - 1;
         let walls = [];
         for (let w = 0; w < width; w++){
             for (let h = 0; h < height; h++){
@@ -148,15 +172,17 @@ namespace tilesAdvanced {
      * Animates all tiles of the given type with the animation passed in on the interval given
      */
     //% blockId=animateTileOfTypeWith
-    //% block="animate $tile with $animation every $frameLength"
+    //% block="animate $tile with $animation=animation_editor || every $frameLength"
     //% tile.shadow=tileset_tile_picker
     //% tile.decompileIndirectFixedInstances=true
+    //% expandableArgumentMode="toggle"
+    //% frameLength.defl=200
     //% group="Tile Animation"
     //% weight=6
-    export function animateTileOfTypeWith(tile: Image, animation: Image[], frameLenght: number) {
+    export function animateTileOfTypeWith(tile: Image, animation: Image[], frameLength: number = 200) {
         let frame = 0
         let tilesToAnimate = tiles.getTilesByType(tile)
-        game.onUpdateInterval(frameLenght, function animateTiles() {
+        game.onUpdateInterval(frameLength, function animateTiles() {
             for (let tileOfType of tilesToAnimate) {
                 tiles.setTileAt(tileOfType, animation[frame])
             }
