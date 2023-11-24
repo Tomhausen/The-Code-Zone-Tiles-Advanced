@@ -6,6 +6,7 @@
 //% groups="['Getting Tiles', 'Tilemap Population', 'Tile Comparisons', 'Tile Animation', 'Pathfinding']"
 
 namespace tilesAdvanced {
+
     /**
      * Returns a list of tiles in a plus sign within a tile in a given range
      */
@@ -113,13 +114,11 @@ namespace tilesAdvanced {
     //% group="Tilemap Population"
     //% weight=6
     export function placeOnRandomTileOffScreen(sprite: Sprite, tile: Image) {
+        let currentScene = game.currentScene();
         tiles.placeOnRandomTile(sprite, tile);
-        let spriteSize = Math.sqrt((sprite.width / 2) ^ 2 + (sprite.height / 2) ^ 2);
-        let x_dist = sprite.x - scene.cameraProperty(CameraProperty.X);
-        let y_dist = sprite.y - scene.cameraProperty(CameraProperty.Y);
-        let distance = Math.sqrt(x_dist ^ 2 + y_dist ^ 2);
-        if (distance < spriteSize + 120) {
-            placeOnRandomTileOffScreen(sprite, tile)
+        if ((sprite.right > currentScene.camera.left && sprite.left < currentScene.camera.right) ||
+            (sprite.bottom > currentScene.camera.top && sprite.top < currentScene.camera.bottom)){
+                placeOnRandomTileOffScreen(sprite, tile);
         }
     }
     
