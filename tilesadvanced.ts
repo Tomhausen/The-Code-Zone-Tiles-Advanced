@@ -199,14 +199,14 @@ namespace tilesAdvanced {
     //% group="Pathfinding"
     //% weight=9
     export function checkLineOfSight(sprite: Sprite, target: Sprite): boolean {
-        let xDif = target.x - this.x
-        let yDif = target.y - this.y
+        let xDif = target.x - sprite.x
+        let yDif = target.y - sprite.y
         // let distance = Math.sqrt(xDif ** 2 + yDif ** 2) // inventing triangles 
         let xIncrement = xDif / 25
         let yIncrement = yDif / 25
         for (let i = 0; i < 25; i++) {
-            let x = this.x + i * xIncrement
-            let y = this.y + i * yIncrement
+            let x = sprite.x + i * xIncrement
+            let y = sprite.y + i * yIncrement
             let col = Math.floor(x / 16)
             let row = Math.floor(y / 16)
             if (tiles.tileAtLocationIsWall(tiles.getTileLocation(col, row))) {
@@ -216,9 +216,9 @@ namespace tilesAdvanced {
         return true
     }
 
-    class PathfinderSprite extends Sprite {
+    export class PathfinderSprite extends Sprite {
 
-        private isFollowing: boolean = false;
+        public isFollowing: boolean = false;
 
         constructor(image: Image, kind: number) {
             super(image);
