@@ -224,6 +224,22 @@ namespace tilesAdvanced {
             super(image);
             this.setKind(kind);
         }
+
+        public followUsingPathfinding(target: Sprite, speed = 100){
+            let myStart = this.tilemapLocation();
+            let path = scene.aStar(myStart, target.tilemapLocation());
+            this.isFollowing = true;
+            scene.followPath(this, path, speed);
+            while (this.isFollowing) {
+                if (!tileIsTile(this.tilemapLocation(), myStart)) {
+                    myStart = this.tilemapLocation();
+                    path = scene.aStar(myStart, target.tilemapLocation());
+                    scene.followPath(this, path, speed);
+                }
+                pause(control.eventContext().deltaTime);
+            }
+            scene.followPath(this, path, 0);
+        }
     }
     
     /**
@@ -247,17 +263,7 @@ namespace tilesAdvanced {
     //% group="Pathfinding"
     //% weight=7
     export function followUsingPathfinding(sprite: PathfinderSprite, target: Sprite, speed = 100) {
-        let myStart = sprite.tilemapLocation();
-        let path = scene.aStar(myStart, target.tilemapLocation());
-        sprite.isFollowing = true;
-        scene.followPath(sprite, path, speed);
-        while (sprite.isFollowing) {
-            if (!tileIsTile(sprite.tilemapLocation(), myStart)) {
-                myStart = sprite.tilemapLocation();
-                path = scene.aStar(myStart, target.tilemapLocation());
-                scene.followPath(sprite, path, speed);
-            }
-        }
+        sprite.followUsingPathfinding(target, speed);
     }
 
     /**
