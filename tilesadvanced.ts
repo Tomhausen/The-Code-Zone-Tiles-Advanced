@@ -222,7 +222,7 @@ namespace tilesAdvanced {
 
         constructor(image: Image, kind: number) {
             super(image);
-            this.kind = kind;
+            this.setKind(kind);
         }
     }
     
