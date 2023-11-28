@@ -117,12 +117,11 @@ namespace tilesAdvanced {
         let currentScene = game.currentScene();
         tiles.placeOnRandomTile(sprite, tile);
         if ((sprite.right > currentScene.camera.left && sprite.left < currentScene.camera.right) ||
-            (sprite.bottom > currentScene.camera.top && sprite.top < currentScene.camera.bottom)){
-                placeOnRandomTileOffScreen(sprite, tile);
+            (sprite.bottom > currentScene.camera.top && sprite.top < currentScene.camera.bottom)) {
+            placeOnRandomTileOffScreen(sprite, tile);
         }
     }
-    
-
+        
     /**
      * Returns a list of all the tiles that are a wall
      */
@@ -130,14 +129,14 @@ namespace tilesAdvanced {
     //% block="array of all wall tiles"
     //% group="Getting Tiles"
     //% weight=6
-    export function getAllWallTiles(): tiles.Location[]{
+    export function getAllWallTiles(): tiles.Location[] {
         let width = getTilemapWidth() - 1;
         let height = getTilemapHeight() - 1;
         let walls = [];
-        for (let w = 0; w < width; w++){
-            for (let h = 0; h < height; h++){
+        for (let w = 0; w < width; w++) {
+            for (let h = 0; h < height; h++) {
                 let tile = tiles.getTileLocation(w, h);
-                if (tiles.tileAtLocationIsWall(tile)){
+                if (tiles.tileAtLocationIsWall(tile)) {
                     walls.push(tile);
                 }
             }
@@ -198,16 +197,16 @@ namespace tilesAdvanced {
     //% blockId=checkLineOfSight
     //% block="can %sprite=variables_get(myEnemy) see %target=variables_get(mySprite)"
     //% group="Pathfinding"
-    //% weight=8
-    export function checkLineOfSight(lookingSprite: Sprite, target: Sprite): boolean {
-        let xDif = target.x - lookingSprite.x
-        let yDif = target.y - lookingSprite.y
-        let distance = Math.sqrt(xDif ** 2 + yDif ** 2) // inventing triangles 
+    //% weight=9
+    export function checkLineOfSight(sprite: Sprite, target: Sprite): boolean {
+        let xDif = target.x - this.x
+        let yDif = target.y - this.y
+        // let distance = Math.sqrt(xDif ** 2 + yDif ** 2) // inventing triangles 
         let xIncrement = xDif / 25
         let yIncrement = yDif / 25
         for (let i = 0; i < 25; i++) {
-            let x = lookingSprite.x + i * xIncrement
-            let y = lookingSprite.y + i * yIncrement
+            let x = this.x + i * xIncrement
+            let y = this.y + i * yIncrement
             let col = Math.floor(x / 16)
             let row = Math.floor(y / 16)
             if (tiles.tileAtLocationIsWall(tiles.getTileLocation(col, row))) {
@@ -217,6 +216,29 @@ namespace tilesAdvanced {
         return true
     }
 
+    class PathfinderSprite extends Sprite {
+
+        private isFollowing: boolean = false;
+
+        constructor(image: Image, kind: number) {
+            super(image);
+            this.kind = kind;
+        }
+    }
+    
+    /**
+     * Creates a sprite capable of carrying out advanced pathfinding
+     */
+    //% blockId=createPathfinderSprite
+    //% block="pathfinder sprite %img=screen_image_picker of kind %kind=spritekind"
+    //% group="Pathfinding"
+    //% weight=6
+    export function createPathfinderSprite(image: Image, kind: number): PathfinderSprite{
+        const sprite = new PathfinderSprite(image, kind);
+        game.currentScene().physicsEngine.addSprite(sprite);
+        return sprite;
+    }
+
     /**
      * Makes this sprite follow the target sprite using pathfinding
      */
@@ -224,20 +246,28 @@ namespace tilesAdvanced {
     //% block="set %sprite=variables_get(myEnemy) follow %target=variables_get(mySprite) || with speed %speed"
     //% group="Pathfinding"
     //% weight=7
-    export function followUsingPathfinding(sprite: Sprite, target: Sprite, speed = 100) {
+    export function followUsingPathfinding(sprite: PathfinderSprite, target: Sprite, speed = 100) {
         let myStart = sprite.tilemapLocation();
         let path = scene.aStar(myStart, target.tilemapLocation());
+        sprite.isFollowing = true;
         scene.followPath(sprite, path, speed);
-        game.onUpdate(function tick() {
+        while (sprite.isFollowing) {
             if (!tileIsTile(sprite.tilemapLocation(), myStart)) {
                 myStart = sprite.tilemapLocation();
                 path = scene.aStar(myStart, target.tilemapLocation());
                 scene.followPath(sprite, path, speed);
             }
-            sprite.say("following")
-        })
+        }
     }
 
+    /**
+     * Stops the path finding sprite from following the path
+     */
+    //% blockId=stopFollowingPath
+    //% block="stop %sprite=variables_get(myEnemy) following path"
+    //% group="Pathfinding"
+    //% weight=8
+    export function stopFollowingPath(sprite: PathfinderSprite) {
+        sprite.isFollowing = false;
+    }
 }
-
-

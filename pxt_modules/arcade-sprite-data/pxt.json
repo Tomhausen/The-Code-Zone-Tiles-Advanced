@@ -1,0 +1,27 @@
+{
+    "name": "arcade-sprite-data",
+    "version": "0.2.1",
+    "dependencies": {
+        "game": "*"
+    },
+    "files": [
+        "CODE_OF_CONDUCT.md",
+        "README.md",
+        "SECURITY.md",
+        "main.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "testDependencies": {
+        "device": "*"
+    },
+    "targetVersions": {
+        "target": "1.11.37",
+        "targetId": "arcade"
+    },
+    "supportedTargets": [
+        "arcade"
+    ],
+    "preferredEditor": "tsprj"
+}

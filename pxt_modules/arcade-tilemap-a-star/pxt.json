@@ -1,0 +1,33 @@
+{
+    "name": "arcade-tilemap-a-star",
+    "version": "0.4.0",
+    "description": "",
+    "dependencies": {
+        "device": "*"
+    },
+    "files": [
+        "README.md",
+        "main.ts",
+        "a-star.ts",
+        "path-following.ts",
+        "docs/a-star.md",
+        "docs/follow-path.md",
+        "docs/sprite-percent-path-completed.md",
+        "docs/sprite-is-following-path.md",
+        "docs/on-path-completion.md"
+    ],
+    "testFiles": [
+        "tilemap.g.jres",
+        "tilemap.g.ts",
+        "test.ts"
+    ],
+    "public": true,
+    "targetVersions": {
+        "target": "1.8.22",
+        "targetId": "arcade"
+    },
+    "supportedTargets": [
+        "arcade"
+    ],
+    "preferredEditor": "tsprj"
+}
