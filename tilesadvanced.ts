@@ -234,11 +234,8 @@ namespace tilesAdvanced {
             this.isFollowing = true;
             this.startFollowing();
             game.onUpdate(function () {
-                // console.log(this.isFollowing);
-                // console.log(this.path.length);
                 if (this.isFollowing) {
                     if (!tileIsTile(this.tilemapLocation(), myStart)) {
-                        console.log(2);
                         myStart = this.tilemapLocation();
                         this.path = scene.aStar(myStart, this.target.tilemapLocation());
                         scene.followPath(this, this.path, this.speed);
