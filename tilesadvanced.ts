@@ -121,7 +121,7 @@ namespace tilesAdvanced {
             placeOnRandomTileOffScreen(sprite, tile);
         }
     }
-        
+
     /**
      * Returns a list of all the tiles that are a wall
      */
@@ -219,29 +219,40 @@ namespace tilesAdvanced {
     export class PathfinderSprite extends Sprite {
 
         public isFollowing: boolean = false;
+        public path: tiles.Location[];
+        public target: Sprite;
+        public speed: number;
 
         constructor(image: Image, kind: number) {
             super(image);
             this.setKind(kind);
         }
 
-        public followUsingPathfinding(target: Sprite, speed = 100){
+        public followUsingPathfinding(speed: number) {
             let myStart = this.tilemapLocation();
-            let path = scene.aStar(myStart, target.tilemapLocation());
+            this.speed = speed;
             this.isFollowing = true;
-            scene.followPath(this, path, speed);
-            while (this.isFollowing) {
-                if (!tileIsTile(this.tilemapLocation(), myStart)) {
-                    myStart = this.tilemapLocation();
-                    path = scene.aStar(myStart, target.tilemapLocation());
-                    scene.followPath(this, path, speed);
+            this.startFollowing();
+            game.onUpdate(function () {
+                // console.log(this.isFollowing);
+                // console.log(this.path.length);
+                if (this.isFollowing) {
+                    if (!tileIsTile(this.tilemapLocation(), myStart)) {
+                        console.log(2);
+                        myStart = this.tilemapLocation();
+                        this.path = scene.aStar(myStart, this.target.tilemapLocation());
+                        scene.followPath(this, this.path, this.speed);
+                    }
                 }
-                pause(control.eventContext().deltaTime);
-            }
-            scene.followPath(this, path, 0);
+            })
+        }
+
+        public startFollowing() {
+            this.path = scene.aStar(this.tilemapLocation(), this.target.tilemapLocation());
+            scene.followPath(this, this.path, this.speed);
         }
     }
-    
+
     /**
      * Creates a sprite capable of carrying out advanced pathfinding
      */
@@ -249,7 +260,7 @@ namespace tilesAdvanced {
     //% block="pathfinder sprite %img=screen_image_picker of kind %kind=spritekind"
     //% group="Pathfinding"
     //% weight=6
-    export function createPathfinderSprite(image: Image, kind: number): PathfinderSprite{
+    export function createPathfinderSprite(image: Image, kind: number): PathfinderSprite {
         const sprite = new PathfinderSprite(image, kind);
         game.currentScene().physicsEngine.addSprite(sprite);
         return sprite;
@@ -263,17 +274,46 @@ namespace tilesAdvanced {
     //% group="Pathfinding"
     //% weight=7
     export function followUsingPathfinding(sprite: PathfinderSprite, target: Sprite, speed = 100) {
-        sprite.followUsingPathfinding(target, speed);
+        sprite.target = target;
+        sprite.followUsingPathfinding(speed);
     }
 
     /**
-     * Stops the path finding sprite from following the path
+     * Stops the path finding sprite from following the sprite
      */
-    //% blockId=stopFollowingPath
-    //% block="stop %sprite=variables_get(myEnemy) following path"
+    //% blockId=stopFollowingSprite
+    //% block="stop %sprite=variables_get(myEnemy) following sprite"
     //% group="Pathfinding"
     //% weight=8
-    export function stopFollowingPath(sprite: PathfinderSprite) {
+    export function stopFollowingSprite(sprite: PathfinderSprite) {
         sprite.isFollowing = false;
+        sprite.path = [];
+        scene.followPath(sprite, sprite.path, 0);
     }
+
+    /**
+     * Resume following target sprite
+     */
+    //% blockId=resumeFollowingSprite
+    //% block="%follower=variables_get(myEnemy) resume following a sprite"
+    //% group="Pathfinding"
+    //% weight=10
+    export function resumeFollowingSprite(follower: PathfinderSprite) {
+        if (follower.path.length < 1) {
+            follower.isFollowing = true;
+            follower.startFollowing();
+        }
+    }
+
+    /**
+     * Changes the target a sprite is following
+     */
+    //% blockId=changeTarget
+    //% block="change %follower=variables_get(myEnemy) target they follow %target=variables_get(mySprite)"
+    //% group="Pathfinding"
+    //% weight=9
+    export function changeTarget(follower: PathfinderSprite, target: Sprite) {
+        follower.target = target;
+    }
+
 }
