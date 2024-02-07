@@ -313,4 +313,51 @@ namespace tilesAdvanced {
         follower.target = target;
     }
 
+
+    /**
+    * Returns the distance between the centres of the given tiles
+    */
+    //% blockId=distanceBetweenTiles
+    //% block="distance between $tile and $otherTile"
+    //% tile.shadow=mapgettile
+    //% otherTile.shadow=mapgettile
+    //% group="Tile Comparisons"
+    //% weight=20
+    export function distanceBetweenTiles(tile: tiles.Location, otherTile: tiles.Location): number {
+        let x = tile.column - otherTile.column;
+        let y = tile.row - otherTile.row;
+        return Math.sqrt(x ** 2 + y ** 2)
+    }
+
+    /**
+     * Returns a list of tiles of a given type sorted by their distance to a given tile
+     */
+    //% blockId=getListOfTilesOfTypeByDistanceFrom
+    //% block="list of $tileType tiles sorted by distance to $tile"
+    //% tile.shadow=mapgettile
+    //% tileType.shadow=tileset_tile_picker
+    //% tileType.decompileIndirectFixedInstances=true
+    //% group="Tile Comparisons"
+    //% weight=20
+    export function getListOfTilesOfTypeByDistanceFrom(tile: tiles.Location, tileType: Image): tiles.Location[] {
+        let allTiles = tiles.getTilesByType(tileType);
+        let sortedTiles: tiles.Location[] = [];
+        sortedTiles.push(allTiles.shift());
+        allTiles.forEach(function (unsortedTile: tiles.Location) {
+            let inserted = false;
+            for (let i = 0; i < sortedTiles.length; i++) {
+                let sortedTile = sortedTiles[i];
+                if (distanceBetweenTiles(tile, unsortedTile) < distanceBetweenTiles(tile, sortedTile)) {
+                    sortedTiles.insertAt(i, unsortedTile);
+                    inserted = true;
+                    break;
+                }
+            }
+            if (!inserted) {
+                sortedTiles.push(unsortedTile)
+            }
+        })
+        return sortedTiles
+    }
+
 }
