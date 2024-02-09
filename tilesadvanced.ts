@@ -330,17 +330,14 @@ namespace tilesAdvanced {
     }
 
     /**
-     * Returns a list of tiles of a given type sorted by their distance to a given tile
+     * Returns a given list of tiles sorted by their distance to a given tile
      */
-    //% blockId=getListOfTilesOfTypeByDistanceFrom
-    //% block="list of $tileType tiles sorted by distance to $tile"
+    //% blockId=sortListOfTilesByDistance
+    //% block="sort $allTiles=variables_get(list) by distance to $tile"
     //% tile.shadow=mapgettile
-    //% tileType.shadow=tileset_tile_picker
-    //% tileType.decompileIndirectFixedInstances=true
     //% group="Tile Comparisons"
-    //% weight=20
-    export function getListOfTilesOfTypeByDistanceFrom(tile: tiles.Location, tileType: Image): tiles.Location[] {
-        let allTiles = tiles.getTilesByType(tileType);
+    //% weight=20     
+    export function sortListOfTilesByDistance(tile: tiles.Location, allTiles: tiles.Location[]): tiles.Location[] {
         let sortedTiles: tiles.Location[] = [];
         sortedTiles.push(allTiles.shift());
         allTiles.forEach(function (unsortedTile: tiles.Location) {
@@ -359,5 +356,4 @@ namespace tilesAdvanced {
         })
         return sortedTiles
     }
-
 }
