@@ -125,8 +125,8 @@ namespace tilesAdvanced {
     /**
      * Returns a list of all the tiles that are a wall
      */
-    //% blockId=getAllWallTiles
-    //% block="array of all wall tiles"
+    //% blockId=getAllTilesWhereWallIs
+    //% block="array of all tiles where wall is $isWall"
     //% group="Getting Tiles"
     //% weight=6
     export function getAllTilesWhereWallIs(isWall: boolean): tiles.Location[] {
