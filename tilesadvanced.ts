@@ -129,14 +129,14 @@ namespace tilesAdvanced {
     //% block="array of all wall tiles"
     //% group="Getting Tiles"
     //% weight=6
-    export function getAllWallTiles(): tiles.Location[] {
+    export function getAllTilesWhereWallIs(isWall: boolean): tiles.Location[] {
         let width = getTilemapWidth() - 1;
         let height = getTilemapHeight() - 1;
         let walls = [];
         for (let w = 0; w < width; w++) {
             for (let h = 0; h < height; h++) {
                 let tile = tiles.getTileLocation(w, h);
-                if (tiles.tileAtLocationIsWall(tile)) {
+                if (tiles.tileAtLocationIsWall(tile) == isWall) {
                     walls.push(tile);
                 }
             }
