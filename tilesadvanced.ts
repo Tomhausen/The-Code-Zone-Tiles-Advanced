@@ -130,8 +130,8 @@ namespace tilesAdvanced {
     //% group="Getting Tiles"
     //% weight=6
     export function getAllTilesWhereWallIs(isWall: boolean): tiles.Location[] {
-        let width = getTilemapWidth() - 1;
-        let height = getTilemapHeight() - 1;
+        let width = getTilemapWidth();
+        let height = getTilemapHeight();
         let walls = [];
         for (let w = 0; w < width; w++) {
             for (let h = 0; h < height; h++) {
