@@ -1,11 +1,12 @@
+
+enum Shapes { Plus, Square }
+
 /**
 * Adds additional tilemap functionality
 */
 //% weight=0 color=#13a89e icon="\uf041" block="Tiles Advanced"
 //% advanced=false
 //% groups="['Getting Tiles', 'Tilemap Population', 'Tile Comparisons', 'Tile Animation', 'Pathfinding']"
-
-enum Shapes { Plus, Square }
 
 namespace tilesAdvanced {
 
