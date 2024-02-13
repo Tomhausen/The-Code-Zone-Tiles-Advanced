@@ -5,35 +5,61 @@
 //% advanced=false
 //% groups="['Getting Tiles', 'Tilemap Population', 'Tile Comparisons', 'Tile Animation', 'Pathfinding']"
 
+enum Shapes { Plus, Square }
+
 namespace tilesAdvanced {
 
+    function adjacentTilesInPlus(tile: tiles.Location, distance: number): tiles.Location[] {
+        let col = tile.col;
+        let row = tile.row;
+        let adjacentTiles = [tile];
+
+        for (let i = 0; i < distance; i++) {
+            adjacentTiles.push(tiles.getTileLocation(col - i, row))
+        }
+        for (let i = 0; i < distance; i++) {
+            adjacentTiles.push(tiles.getTileLocation(col + i, row))
+        }
+        for (let i = 0; i < distance; i++) {
+            adjacentTiles.push(tiles.getTileLocation(col, row - i))
+        }
+        for (let i = 0; i < distance; i++) {
+            adjacentTiles.push(tiles.getTileLocation(col, row + i))
+        }
+        return adjacentTiles
+    }
+
+    function adjacentTilesInSquare(tile: tiles.Location, distance: number): tiles.Location[] {
+        let startCol = tile.col - distance;
+        let startRow = tile.row - distance;
+        let endCol = tile.col + distance;
+        let endRow = tile.row + distance;
+        let adjacentTiles = [tile];
+
+        for (let col = startCol; col < endCol + 1; col++) {
+            for (let row = startRow; row < endRow + 1; row++) {
+                adjacentTiles.push(tiles.getTileLocation(col, row))
+            }
+        }
+        return adjacentTiles
+    }
+
     /**
-     * Returns a list of tiles in a plus sign within a tile in a given range
+     * Returns a list of tiles in the given shape and size relative to the given tile
      */
     //% blockId=getAdjacentTiles
-    //% block="get tiles near to $tile within $distance"
+    //% block="get tiles in shape $shape near $tile within $distance"
     //% tile.shadow=mapgettile
     //% group="Getting Tiles"
     //% weight=100
-    export function getAdjacentTiles(tile: tiles.Location, distance: number): tiles.Location[] {
-        let i: number;
-        let col = tile.col;
-        let row = tile.row;
-        let adjacent_tiles = [tile];
-
-        for (i = 0; i < distance; i++) {
-            adjacent_tiles.push(tiles.getTileLocation(col - i, row))
+    export function getAdjacentTiles(shape: Shapes, tile: tiles.Location, distance: number): tiles.Location[] {
+        if (shape = 0){
+            return adjacentTilesInPlus(tile, distance);
         }
-        for (i = 0; i < distance; i++) {
-            adjacent_tiles.push(tiles.getTileLocation(col + i, row))
+        else if (shape = 1){
+            return adjacentTilesInSquare(tile, distance);
         }
-        for (i = 0; i < distance; i++) {
-            adjacent_tiles.push(tiles.getTileLocation(col, row - i))
-        }
-        for (i = 0; i < distance; i++) {
-            adjacent_tiles.push(tiles.getTileLocation(col, row + i))
-        }
-        return adjacent_tiles
+        return [];
     }
 
     /**
