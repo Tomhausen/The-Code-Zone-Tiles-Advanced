@@ -129,6 +129,23 @@ namespace tilesAdvanced {
     }
 
     /**
+     * Returns true if the given sprite is within the bounds of the screen
+     * @param sprite
+     * @param tile
+     */
+    //% blockId=isSpriteOnScreen
+    //% block="is $sprite=variables_get(mySprite) on screen"
+    //% group="Tile Comparisons"
+    //% weight=6
+    export function isSpriteOnScreen(sprite: Sprite) {
+        let currentScene = game.currentScene();
+        let onX = sprite.right > currentScene.camera.left && sprite.left < currentScene.camera.right;
+        let onY = sprite.bottom > currentScene.camera.top && sprite.top < currentScene.camera.bottom;
+        let isOnScreen = onX && onY;
+        return isOnScreen;
+    }
+
+    /**
      * Center the given sprite on a random location that is the given type (image) and is off screen
      * @param sprite
      * @param tile
@@ -143,8 +160,7 @@ namespace tilesAdvanced {
     export function placeOnRandomTileOffScreen(sprite: Sprite, tile: Image) {
         let currentScene = game.currentScene();
         tiles.placeOnRandomTile(sprite, tile);
-        if ((sprite.right > currentScene.camera.left && sprite.left < currentScene.camera.right) ||
-            (sprite.bottom > currentScene.camera.top && sprite.top < currentScene.camera.bottom)) {
+        if (isSpriteOnScreen(sprite)) {
             placeOnRandomTileOffScreen(sprite, tile);
         }
     }

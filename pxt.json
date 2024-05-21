@@ -18,7 +18,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "1.13.53",
+        "target": "2.0.2",
         "pxt": "8.5.2",
         "targetId": "arcade"
     },
