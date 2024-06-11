@@ -52,7 +52,7 @@ namespace tilesAdvanced {
     //% block="get tiles in shape $shape near $tile within $distance"
     //% tile.shadow=mapgettile
     //% group="Getting Tiles"
-    //% weight=100
+    //% weight=99
     export function getAdjacentTiles(shape: Shapes, tile: tiles.Location, distance: number): tiles.Location[] {
         if (shape = 0){
             return adjacentTilesInPlus(tile, distance);
@@ -61,6 +61,19 @@ namespace tilesAdvanced {
             return adjacentTilesInSquare(tile, distance);
         }
         return [];
+    }
+
+    /**
+     * Returns the loaded tilemap.
+     */
+    //% block="get current tilemap"
+    //% blockId=getCurrentTilemap
+    //% group="Tilemaps" weight=100
+    export function getCurrentTilemap(): tiles.TileMapData {
+        if (!game.currentScene().tileMap){
+            return null;
+        }
+        return game.currentScene().tileMap.data;   
     }
 
     /**
