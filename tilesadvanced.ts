@@ -54,10 +54,10 @@ namespace tilesAdvanced {
     //% group="Getting Tiles"
     //% weight=99
     export function getAdjacentTiles(shape: Shapes, tile: tiles.Location, distance: number): tiles.Location[] {
-        if (shape = 0){
+        if (shape == 0){
             return adjacentTilesInPlus(tile, distance);
         }
-        else if (shape = 1){
+        else if (shape == 1){
             return adjacentTilesInSquare(tile, distance);
         }
         return [];
