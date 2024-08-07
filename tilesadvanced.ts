@@ -327,9 +327,7 @@ namespace tilesAdvanced {
     //% group="Pathfinding"
     //% weight=9
     export function followUsingPathfinding(sprite: any, target: Sprite, speed = 100) {
-        if (!sprite.target){
-            return
-        }
+        sprite = sprite as PathfinderSprite
         sprite.target = target;
         sprite.followUsingPathfinding(speed);
     }
