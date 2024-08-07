@@ -339,7 +339,8 @@ namespace tilesAdvanced {
     //% block="stop %sprite=variables_get(myEnemy) following sprite"
     //% group="Pathfinding"
     //% weight=8
-    export function stopFollowingSprite(sprite: PathfinderSprite) {
+    export function stopFollowingSprite(sprite: any) {
+        sprite = sprite as PathfinderSprite
         sprite.isFollowing = false;
         sprite.path = [];
         scene.followPath(sprite, sprite.path, 0);
