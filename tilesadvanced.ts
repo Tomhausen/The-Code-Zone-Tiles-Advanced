@@ -312,7 +312,7 @@ namespace tilesAdvanced {
     //% blockId=createPathfinderSprite
     //% block="pathfinder sprite %img=screen_image_picker of kind %kind=spritekind"
     //% group="Pathfinding"
-    //% weight=6
+    //% weight=10
     export function createPathfinderSprite(image: Image, kind: number): PathfinderSprite {
         const sprite = new PathfinderSprite(image, kind);
         game.currentScene().physicsEngine.addSprite(sprite);
@@ -325,8 +325,11 @@ namespace tilesAdvanced {
     //% blockId=followUsingPathfinding
     //% block="set %sprite=variables_get(myEnemy) follow %target=variables_get(mySprite) || with speed %speed"
     //% group="Pathfinding"
-    //% weight=7
-    export function followUsingPathfinding(sprite: PathfinderSprite, target: Sprite, speed = 100) {
+    //% weight=9
+    export function followUsingPathfinding(sprite: any, target: Sprite, speed = 100) {
+        if (!sprite.target){
+            return
+        }
         sprite.target = target;
         sprite.followUsingPathfinding(speed);
     }
@@ -350,7 +353,7 @@ namespace tilesAdvanced {
     //% blockId=resumeFollowingSprite
     //% block="%follower=variables_get(myEnemy) resume following a sprite"
     //% group="Pathfinding"
-    //% weight=10
+    //% weight=6
     export function resumeFollowingSprite(follower: PathfinderSprite) {
         if (follower.path.length < 1) {
             follower.isFollowing = true;
@@ -364,7 +367,7 @@ namespace tilesAdvanced {
     //% blockId=changeTarget
     //% block="change %follower=variables_get(myEnemy) target they follow %target=variables_get(mySprite)"
     //% group="Pathfinding"
-    //% weight=9
+    //% weight=7
     export function changeTarget(follower: PathfinderSprite, target: Sprite) {
         follower.target = target;
     }
