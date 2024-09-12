@@ -1,5 +1,6 @@
 
 enum Shapes { Plus, Square }
+enum PathDirection { Up, Down, Left, Right }
 
 /**
 * Adds additional tilemap functionality
@@ -7,6 +8,8 @@ enum Shapes { Plus, Square }
 //% weight=0 color=#13a89e icon="\uf041" block="Tiles Advanced"
 //% advanced=false
 //% groups="['Getting Tiles', 'Tilemap Population', 'Tile Comparisons', 'Tile Animation', 'Pathfinding']"
+
+
 
 namespace tilesAdvanced {
 
@@ -414,4 +417,74 @@ namespace tilesAdvanced {
         })
         return sortedTiles
     }
+
+    function generateHorizontalPath(direction: PathDirection, turnChancePercentage: number, startCol: number, endCol: number): tiles.Location[] {
+        let step = 1
+        if (direction == PathDirection.Left) {
+            let step = -1
+        }
+        let column = startCol
+        let row = randint(0, tilesAdvanced.getTilemapHeight() - 1)
+        let tilesInPath = []
+        tilesInPath.push(tiles.getTileLocation(column, row))
+        while (column != endCol) {
+            if (Math.percentChance(turnChancePercentage)) {
+                column += step
+            } else {
+                row += randint(0, 1) * 2 - 1
+            }
+            row = Math.constrain(row, 0, tilesAdvanced.getTilemapHeight() - 1)
+            let tile = tiles.getTileLocation(column, row)
+            tilesInPath.push(tile)
+        }
+        return tilesInPath
+    }
+
+    function generateVerticalPath(direction: PathDirection, turnChancePercentage: number, startRow: number, endRow: number): tiles.Location[] {
+        let step = 1
+        if (direction == PathDirection.Up) {
+            let step = -1
+        }
+        let row = startRow
+        let column = randint(0, tilesAdvanced.getTilemapWidth() - 1)
+        let tilesInPath = []
+        tilesInPath.push(tiles.getTileLocation(column, row))
+        while (row != endRow) {
+            if (Math.percentChance(turnChancePercentage)) {
+                row += step
+            } else {
+                column += randint(0, 1) * 2 - 1
+            }
+            column = Math.constrain(row, 0, tilesAdvanced.getTilemapWidth() - 1)
+            let tile = tiles.getTileLocation(column, row)
+            tilesInPath.push(tile)
+        }
+        return tilesInPath
+    }
+
+    //TODO include wall togle on these
+
+    /**
+     * Creates a path across the tilemap in the given direction.
+     */
+    //% blockId=generatePathAcrossMap
+    //% block="generate path across map in $direction with $turnChancePercentage turn chance start $startRowOrColumn end $endRowOrColumn"
+    //% turnChancePercentage.defl=50
+    //% startRowOrColumn.defl=0
+    //% endRowOrColumn.defl=15
+    //% group="Pathfinding"
+    //% weight=1
+
+    export function generatePathAcrossMap(direction: PathDirection, turnChancePercentage = 50, startRowOrColumn = 0, endRowOrColumn = 15): tiles.Location[] {
+        let tilesInPath: tiles.Location[] = []
+        if (direction == PathDirection.Up || direction == PathDirection.Down) {
+            tilesInPath = generateVerticalPath(direction, turnChancePercentage, startRowOrColumn, endRowOrColumn)
+        }
+        else {
+            tilesInPath = generateHorizontalPath(direction, turnChancePercentage, startRowOrColumn, endRowOrColumn)
+
+        }
+        return tilesInPath
+    }
+
 }
