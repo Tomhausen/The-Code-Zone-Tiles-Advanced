@@ -13,8 +13,6 @@ enum PathDirection { Up, Down, Left, Right }
 
 namespace tilesAdvanced {
 
-    export let tilesAnimated = false
-
     function adjacentTilesInPlus(tile: tiles.Location, distance: number): tiles.Location[] {
         let col = tile.col;
         let row = tile.row;
@@ -242,9 +240,8 @@ namespace tilesAdvanced {
         let frame = 0
         let tilesToAnimate = tiles.getTilesByType(tile)
         let tilemap = game.currentScene().tileMap.data
-        tilesAnimated = true
         control.runInBackground(function () {
-            while (tilesAnimated) {
+            while (tilemap == game.currentScene().tileMap.data) {
                 for (let tileOfType of tilesToAnimate) {
                     tiles.setTileAt(tileOfType, animation[frame])
                 }
@@ -255,17 +252,6 @@ namespace tilesAdvanced {
                 pause(frameLength)
             }
         })
-    }
-
-    /**
-     * stops animation running on any animated tiles
-     */
-    //% blockId=stopTileAnimation
-    //% block="stop tile animations"
-    //% group="Tile Animation"
-    //% weight=5
-    export function stopTileAnimation(){
-        tilesAnimated = false
     }
 
     /**
