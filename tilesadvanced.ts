@@ -13,7 +13,7 @@ enum PathDirection { Up, Down, Left, Right }
 
 namespace tilesAdvanced {
 
-    let tilesAnimated = false
+    export let tilesAnimated = false
 
     function adjacentTilesInPlus(tile: tiles.Location, distance: number): tiles.Location[] {
         let col = tile.col;
