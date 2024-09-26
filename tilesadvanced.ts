@@ -239,13 +239,17 @@ namespace tilesAdvanced {
     export function animateTileOfTypeWith(tile: Image, animation: Image[], frameLength: number = 200) {
         let frame = 0
         let tilesToAnimate = tiles.getTilesByType(tile)
-        game.onUpdateInterval(frameLength, function animateTiles() {
-            for (let tileOfType of tilesToAnimate) {
-                tiles.setTileAt(tileOfType, animation[frame])
-            }
-            frame += 1
-            if (frame == animation.length - 1) {
-                frame = 0
+        let tilemap = game.currentScene().tileMap.data
+        control.runInBackground(function () {
+            while (tilemap == game.currentScene().tileMap.data) {
+                for (let tileOfType of tilesToAnimate) {
+                    tiles.setTileAt(tileOfType, animation[frame])
+                }
+                frame += 1
+                if (frame == animation.length) {
+                    frame = 0
+                }
+                pause(frameLength)
             }
         })
     }
