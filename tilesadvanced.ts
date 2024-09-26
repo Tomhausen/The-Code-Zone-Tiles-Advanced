@@ -244,7 +244,11 @@ namespace tilesAdvanced {
         let tilemap = game.currentScene().tileMap.data
         tilesAnimated = true
         control.runInBackground(function () {
-            while (tilesAnimated) {
+            while (tilemap == game.currentScene().tileMap.data) {
+                if (!tilesAnimated){
+                    scene.setTileMapLevel(tilemap)
+                    break
+                }
                 for (let tileOfType of tilesToAnimate) {
                     tiles.setTileAt(tileOfType, animation[frame])
                 }
