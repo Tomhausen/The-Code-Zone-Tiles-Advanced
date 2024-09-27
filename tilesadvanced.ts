@@ -242,7 +242,7 @@ namespace tilesAdvanced {
         let tilemap = game.currentScene().tileMap.data
         control.runInBackground(function () {
             while (game.currentScene()) {
-                if (tilemap == game.currentScene().tileMap.data){
+                if (tilemap != game.currentScene().tileMap.data){
                     break
                 }
                 for (let tileOfType of tilesToAnimate) {
