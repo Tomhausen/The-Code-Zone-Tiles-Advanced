@@ -241,7 +241,7 @@ namespace tilesAdvanced {
         let tilesToAnimate = tiles.getTilesByType(tile)
         let tilemap = game.currentScene().tileMap.data
         control.runInBackground(function () {
-            while (game.currentScene()) {
+            while (game.currentScene().tileMap) {
                 if (tilemap != game.currentScene().tileMap.data){
                     break
                 }
